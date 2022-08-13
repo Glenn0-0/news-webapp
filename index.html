@@ -18,7 +18,7 @@
             <!-- logo link -->
             <a class="logo" href="/">News Demo</a>
 
-            <!-- search bar -->
+            <!-- search bar and search submit button-->
             <form action="/search" method="GET">
                 <input
                     autofocus
@@ -28,13 +28,19 @@
                     type="search"
                     name ="q"
                 />
+                
+                <input
+                    class="submit-button"
+                    type="submit"
+                    value="Search"
+                />
             </form>
 
             <!-- link to GitHub -->
             <a 
                 href="https://github.com/Glenn0-0/news-webapp" 
                 class="github-button"
-                >View on GitHub
+                >View on <strong>GitHub</strong>
             </a>
         </header>
 
@@ -66,7 +72,7 @@
                 {{ range.Results.Articles }}
                 <li class="news-article">
                     <div>
-                        <a target="_blank" rel="noreferrer noopener" href=""{{.URL}}>
+                        <a target="_blank" rel="noreferrer noopener" href="{{ .URL }}">
                             <h3 class="title">{{ .Title }}</h3>
                         </a>
                         <p class="description">{{ .Description }}</p>
@@ -75,7 +81,7 @@
                             <time class="published-date">{{ .FormatPublishedDate }}</time>
                         </div>
                     </div>
-                    <img class="article-image" src="{{ .URLToImage }}" />
+                    <img class="article-image" src="{{ .URLToImage }}"/>
                 </li>
                 {{ end }}
 
