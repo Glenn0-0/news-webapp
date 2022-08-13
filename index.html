@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News App Demo</title>
 
+    <!-- CSS links -->
     <link rel="stylesheet" href="/assets/style.css">
 </head>
+
 <body>
     <main>
+        <!-- top header -->
         <header>
+            <!-- logo link -->
             <a class="logo" href="/">News Demo</a>
 
+            <!-- search bar -->
             <form action="/search" method="GET">
                 <input
                     autofocus
@@ -24,10 +30,39 @@
                 />
             </form>
 
-            <a href="/" class="github-button">View on GitHub</a>
+            <!-- link to GitHub -->
+            <a 
+                href="https://github.com/Glenn0-0/news-webapp" 
+                class="github-button"
+                >View on GitHub
+            </a>
         </header>
+
         <section class="container">
+            <!-- displays the total number of results and current page -->
+            <div class="result-count">
+            {{ if .Results }}
+                {{ if (gt .Results.TotalResults 0)}}
+                <p>
+                    About <strong>{{ .Results.TotalResults }}</strong> results were found.
+                    You are on page <strong>{{ .CurrentPage }}</strong> of
+                    <strong>{{ .TotalPages }}</strong
+                    >.
+                </p>
+
+                {{ else if and (ne .Query "") (eq .Results.TotalResults 0) }}
+                <p>
+                    No results found for your query: <strong>{{ .Query }}</strong
+                    >.
+                </p>
+                {{ end }}
+            {{ end }}
+            </div>
+
+            <!-- displays results -->
             <ul class="search-results">
+
+                <!-- single article -->
                 {{ range.Results.Articles }}
                 <li class="news-article">
                     <div>
@@ -37,14 +72,40 @@
                         <p class="description">{{ .Description }}</p>
                         <div class="metadata">
                             <p class="source">{{ .Source.Name }}</p>
-                            <time class="published-date">{{ .PublishedAt }}</time>
+                            <time class="published-date">{{ .FormatPublishedDate }}</time>
                         </div>
                     </div>
                     <img class="article-image" src="{{ .URLToImage }}" />
                 </li>
                 {{ end }}
+
             </ul>
+
+            <!-- previous page button (if current page isn't 1)-->
+            <!-- next page button (if current page isn't the last one) -->
+            <div class="pagination">
+            {{ if . }}
+                {{ if (gt .NextPage 2) }}
+                <a
+                    href="/search?q={{ .Query }}&page={{ .PreviousPage }}"
+                    class="button previous-page"
+                    >Previous</a
+                >
+                {{ end }}
+
+                {{ if (ne .IsLastPage true) }}
+                <a 
+                    href="/search?q={{ .Query }}&page={{ .NextPage }}" 
+                    class="button next-page">
+                    Next</a
+                >
+                {{ end }}
+            {{ end }}
+            </div>
+
         </section>
+
     </main>
+
 </body>
 </html>
