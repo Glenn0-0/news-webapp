@@ -160,7 +160,20 @@ form {
   margin-right: 20px;
 }
 
-@media screen and (max-width: 900px) {
+input:focus {
+  outline: none;
+}
+
+input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  content: URL(./icons8-multiply-24.png);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 910px) {
   .submit-button {
     width: 500px;
     margin-top: 5px;
@@ -173,9 +186,13 @@ form {
   header {
     height: 80px;
   }
+
+  .container {
+    margin-top: 10px;
+  }
 }
 
-@media screen and (max-width: 655px) {
+@media screen and (max-width: 680px) {
   header {
     flex-direction: column;
     height: auto;
@@ -205,5 +222,9 @@ form {
 
   .article-image {
     display: none;
+  }
+
+  .container {
+    margin-top: 30px;
   }
 }
